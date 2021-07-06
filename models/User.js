@@ -11,7 +11,7 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: [true, "Please provide username"],
   },
-  type: String,
+  userType: {type:String, default: "User"},
   information: String,
   phoneNumber: String,
   email: {

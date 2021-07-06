@@ -22,13 +22,15 @@
    }
 
    try { 
-     const user = await User.findOne({email}).select()
+     const user = await User.findOne({
+       email
+     }).select("+password")
 
      if(!user) {
        return res.status(404).json({success: false, error: "Invalid credentials"})
      }
 
-     const isMatch = await user.matchPassword(password)
+     const isMatch = await user.matchPassword.call(user, password)
 
      if (!isMatch) {
        return res.status(404).json({success: false, error: "Invalid credentials"})
@@ -45,7 +47,6 @@
 
  const sendToken = (user, statusCode, res) => {
    const token = user.getSignedToken()
-   console.log(token)
    res.status(statusCode).json({
        success: true,
        token

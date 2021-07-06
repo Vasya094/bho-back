@@ -1,5 +1,5 @@
  const express = require('express')
- const mongoose = require('mongoose')
+ const cors = require('cors')
  const errorHandler = require('./middleware/error')
  require('dotenv').config({path: './config.env'})
  const connectDataBase = require("./config/db.js")
@@ -11,6 +11,12 @@
  connectDataBase()
 
  app.use(express.json());
+ app.use(cors());
+
+ app.use('/', (req, res, next)=> {
+     console.log(req.url)
+     next()
+ })
 
  app.use('/api/auth', require('./routes/auth'));
  app.use('/api/private', require('./routes/private'));
