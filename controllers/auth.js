@@ -49,7 +49,9 @@
    const token = user.getSignedToken()
    res.status(statusCode).json({
        success: true,
-       token
+       token,
+       name: user.userName,
+       type: user.userType
      }) 
  }
 
