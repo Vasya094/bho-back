@@ -19,8 +19,7 @@
  })
 
  app.use('/api/auth', require('./routes/auth'));
- app.use('/api/private', require('./routes/private'));
- app.use('/api/users', require('./routes/users'));
+ app.use('/api/volunteers', require('./routes/volunteers'));
 
  // Error Handler Last MiddleWare
 

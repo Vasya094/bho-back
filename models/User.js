@@ -11,9 +11,14 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: [true, "Please provide username"],
   },
-  userType: {type:String, default: "User"},
+  userType: { type: String, default: "User" },
   information: String,
   phoneNumber: String,
+  city: String,
+  contacted: {
+    type: Boolean,
+    default: false,
+  },
   email: {
     type: String,
     required: [true, "Please provide a email"],
@@ -30,14 +35,18 @@ const UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods.matchPassword = async function (password) {
-    return await bcrypt.compare(password, this.password || '');
+  return await bcrypt.compare(password, this.password || "");
 };
 UserSchema.methods.getSignedToken = function () {
-    return jwt.sign({
-        id: this._id
-    }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE,
-    });
+  return jwt.sign(
+    {
+      id: this._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRE,
+    }
+  );
 };
 UserSchema.methods.getResetPasswordToken = function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
